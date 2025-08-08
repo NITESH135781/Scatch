@@ -1,7 +1,5 @@
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb://127.0.0:27017/scatch');
-
 const userSchema = new mongoose.Schema({
     fullname: String,
     email: String,
@@ -10,7 +8,8 @@ const userSchema = new mongoose.Schema({
         type: Array,
         default: []
     },
-    isadmin:{
+    isadmin: Boolean,
+    orders:{
         type: Array,
         default: []
     },
