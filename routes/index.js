@@ -11,8 +11,10 @@ router.get("/", (req, res) => {
 
 router.get('/account', isLoggedIn, async (req, res) => {
   let user = await userModel.findOne({email: req.user.email});
+  let error = req.flash('error');
+  let success = req.flash('success');
   if(user){
-    res.render("myAccount", {user});
+    res.render("myAccount", {user, error, success});
   }
   
 })
