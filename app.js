@@ -19,7 +19,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(
     expressSession({
-        secret: process.env.SESSION_SECRET,
+        secret: process.env.SESSION_SECRET || "fallback_secret_key",
         resave: false,
         saveUninitialized: false, // ← fix this typo
     })
