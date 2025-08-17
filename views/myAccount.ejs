@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>YourShop — My Account</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root { --ring: 230 96% 62%; }
+    body { font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, 'Apple Color Emoji', 'Segoe UI Emoji'; }
+    /* Glass effect helper */
+    .glass { background: rgba(255,255,255,0.7); backdrop-filter: blur(10px); }
+  </style>
+</head>
+<body class="bg-white text-slate-900">
+  <!-- Header -->
+  <%- include('./partials/header') %>
+  <!-- Hero / Welcome -->
+  <section class="relative">
+    <div class="absolute inset-0 -z-10 bg-gradient-to-br from-violet-100 via-indigo-50 to-sky-100"></div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+      <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+        <div class="flex items-center gap-4">
+          <div class="relative">
+            <span class="absolute inset-0 rounded-full bg-gradient-to-tr from-violet-400 to-sky-400 blur-md opacity-60"></span>
+            
+          </div>
+          <div>
+            <h1 class="text-2xl md:text-3xl font-semibold">Welcome, <%= user.fullname %> <span aria-hidden>👋</span></h1>
+            <p class="text-slate-600 text-sm">Manage your profile, orders, addresses, payments and security in one place.</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-3">
+          <a class="px-4 py-2 rounded-xl bg-indigo-600 text-white text-sm font-medium shadow hover:bg-indigo-700">Edit Profile</a>
+          <a href="/logout" class="px-4 py-2 rounded-xl border text-sm font-medium hover:bg-slate-50">Logout</a>
+          
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <main class="max-w-7xl mx-auto mt-10 px-4 sm:px-6 lg:px-8 pb-16">
+    <div class="grid grid-cols-1 md:grid-cols-12 gap-8">
+      <!-- Sidebar -->
+      <aside class="md:col-span-3">
+        <div class="glass border rounded-2xl p-4 md:sticky md:top-24">
+          <nav class="flex md:flex-col md:gap-1 grid grid-cols-3 sm:grid-cols-6 md:grid-cols-1 text-sm">
+            <a href="#profile" class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-white/80 aria-selected:bg-white/80" aria-selected="true">
+              <span class="inline-block w-5 h-5"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21a8 8 0 10-16 0"/><circle cx="12" cy="7" r="4"/></svg></span>
+              <span>Profile</span>
+            </a>
+            <a href="#orders" class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-white/80">
+              <span class="inline-block w-5 h-5"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7h18M6 7l1 12h10l1-12M8 7V4h8v3"/></svg></span>
+              <span>Orders</span>
+            </a>
+            <a href="#addresses" class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-white/80">
+              <span class="inline-block w-5 h-5"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4.5 8-10a8 8 0 10-16 0c0 5.5 8 10 8 10z"/><circle cx="12" cy="12" r="3"/></svg></span>
+              <span>Addresses</span>
+            </a>
+            <a href="#wishlist" class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-white/80">
+              <span class="inline-block w-5 h-5"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.8 4.6a5.5 5.5 0 00-7.8 0L12 5.6l-1-1a5.5 5.5 0 00-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 000-7.8z"/></svg></span>
+              <span>Wishlist</span>
+            </a>
+            <a href="#payments" class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-white/80">
+              <span class="inline-block w-5 h-5"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg></span>
+              <span>Payments</span>
+            </a>
+            <a href="#security" class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-white/80">
+              <span class="inline-block w-5 h-5"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-3 8-10V6l-8-4-8 4v6c0 7 8 10 8 10z"/></svg></span>
+              <span>Security</span>
+            </a>
+          </nav>
+        </div>
+      </aside>
+
+      <!-- Content -->
+      <section class="md:col-span-9 space-y-8">
+        <!-- Profile -->
+        <div id="profile" class="rounded-2xl border shadow-sm">
+          <div class="rounded-t-2xl p-4 bg-gradient-to-r from-indigo-100 via-sky-100 to-violet-100 border-b">
+            <h2 class="text-lg font-semibold">Profile</h2>
+          </div>
+          <div class="p-6 grid sm:grid-cols-2 gap-4">
+            <div>
+              <p class="text-sm text-slate-500">Name</p>
+              <p class="font-medium"><%= user.fullname %></p>
+            </div>
+            <div>
+              <p class="text-sm text-slate-500">Email</p>
+              <p class="font-medium"><%= user.email %></</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Orders -->
+        <div id="orders" class="rounded-2xl border shadow-sm p-6">
+          <div class="flex items-center justify-between mb-4">
+            <h2 class="text-lg font-semibold">Orders</h2>
+            <a href="#" class="text-sm text-indigo-700 hover:underline">View all</a>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="min-w-full text-sm">
+              <thead class="text-left text-slate-500">
+                <tr class="border-b">
+                  <th class="py-3 pr-6">Order</th>
+                  <th class="py-3 pr-6">Date</th>
+                  <th class="py-3 pr-6">Status</th>
+                  <th class="py-3 pr-6">Total</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="border-b last:border-0">
+                  <td class="py-3 pr-6">ODR-1034</td>
+                  <td class="py-3 pr-6">Aug 10, 2025</td>
+                  <td class="py-3 pr-6"><span class="px-2 py-1 rounded-full text-xs bg-emerald-50 text-emerald-700 border border-emerald-200">Delivered</span></td>
+                  <td class="py-3 pr-6">₹2,199</td>
+                </tr>
+                <tr class="border-b last:border-0">
+                  <td class="py-3 pr-6">ODR-1021</td>
+                  <td class="py-3 pr-6">Jul 25, 2025</td>
+                  <td class="py-3 pr-6"><span class="px-2 py-1 rounded-full text-xs bg-amber-50 text-amber-700 border border-amber-200">Shipped</span></td>
+                  <td class="py-3 pr-6">₹1,299</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Addresses -->
+        <div id="addresses" class="rounded-2xl border shadow-sm p-6">
+          <div class="flex items-center justify-between mb-4">
+            <h2 class="text-lg font-semibold">Addresses</h2>
+            <button class="px-3 py-1.5 rounded-lg border text-sm hover:bg-slate-50">Add New</button>
+          </div>
+          <div class="grid md:grid-cols-2 gap-4">
+            <div class="rounded-xl border p-4">
+              <div class="flex items-center justify-between mb-1">
+                <p class="font-medium">Home</p>
+                <a href="#" class="text-sm text-indigo-700 hover:underline">Edit</a>
+              </div>
+              <p class="text-sm text-slate-600">221B Baker Street<br>Bhopal, MP 462001</p>
+              <p class="text-sm text-slate-600 mt-2">+91 12345 67890</p>
+            </div>
+            <div class="rounded-xl border p-4">
+              <div class="flex items-center justify-between mb-1">
+                <p class="font-medium">Office</p>
+                <a href="#" class="text-sm text-indigo-700 hover:underline">Edit</a>
+              </div>
+              <p class="text-sm text-slate-600">MG Road 12<br>Indore, MP 452001</p>
+              <p class="text-sm text-slate-600 mt-2">+91 12345 67890</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Wishlist + Payments + Security grid -->
+        <div class="grid lg:grid-cols-3 gap-8">
+          <!-- Wishlist -->
+          <div id="wishlist" class="rounded-2xl border shadow-sm p-6">
+            <div class="flex items-center justify-between mb-4">
+              <h2 class="text-lg font-semibold">Wishlist</h2>
+              <a href="#" class="text-sm text-indigo-700 hover:underline">View all</a>
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+              <div class="group border rounded-xl overflow-hidden">
+                <div class="aspect-[4/3] overflow-hidden">
+                  <img src="https://images.unsplash.com/photo-1585386959984-a41552231658?q=80&w=800&auto=format&fit=crop" alt="Bag" class="w-full h-full object-cover group-hover:scale-105 transition" />
+                </div>
+                <div class="p-3">
+                  <p class="font-medium">Lounge Bag</p>
+                  <p class="text-sm text-slate-600">₹1,200</p>
+                </div>
+              </div>
+              <div class="group border rounded-xl overflow-hidden">
+                <div class="aspect-[4/3] overflow-hidden">
+                  <img src="https://images.unsplash.com/photo-1548036328-c9fa89d128fa?q=80&w=800&auto=format&fit=crop" alt="Bag" class="w-full h-full object-cover group-hover:scale-105 transition" />
+                </div>
+                <div class="p-3">
+                  <p class="font-medium">College Bag</p>
+                  <p class="text-sm text-slate-600">₹2,000</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Payment Methods -->
+          <div id="payments" class="rounded-2xl border shadow-sm p-6">
+            <div class="flex items-center justify-between mb-4">
+              <h2 class="text-lg font-semibold">Payment Methods</h2>
+              <button class="px-3 py-1.5 rounded-lg border text-sm hover:bg-slate-50">Add Card</button>
+            </div>
+            <div class="space-y-3">
+              <div class="rounded-xl p-4 bg-gradient-to-r from-indigo-500 to-sky-500 text-white shadow">
+                <div class="flex items-center justify-between text-sm opacity-90">
+                  <span>VISA</span><span>•••• 4242</span>
+                </div>
+                <div class="mt-4 flex items-center justify-between">
+                  <p class="font-semibold"><%= user.fullname %></p>
+                  <p class="text-sm">08/28</p>
+                </div>
+              </div>
+              <div class="rounded-xl p-4 bg-gradient-to-r from-rose-500 to-orange-500 text-white shadow">
+                <div class="flex items-center justify-between text-sm opacity-90">
+                  <span>VISA</span><span>•••• 1111</span>
+                </div>
+                <div class="mt-4 flex items-center justify-between">
+                  <p class="font-semibold"><%= user.fullname %></p>
+                  <p class="text-sm">01/27</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Security -->
+          <div id="security" class="rounded-2xl border shadow-sm p-6">
+            <h2 class="text-lg font-semibold mb-4">Security</h2>
+            <label class="block text-sm text-slate-600">Password</label>
+            <div class="mt-2 flex items-center gap-2">
+              <input type="password" value="password" class="w-full rounded-xl border px-3 py-2" />
+              <button class="px-3 py-2 rounded-xl border text-sm hover:bg-slate-50">Update</button>
+            </div>
+            <div class="mt-6 flex items-center justify-between">
+              <div>
+                <p class="font-medium">Two‑Factor Authentication</p>
+                <p class="text-sm text-slate-600">Add an extra layer of security to your account.</p>
+              </div>
+              <label class="inline-flex items-center cursor-pointer">
+                <input type="checkbox" checked class="sr-only peer">
+                <span class="w-11 h-6 bg-slate-200 rounded-full peer-checked:bg-indigo-600 relative transition">
+                  <span class="absolute left-1 top-1 w-4 h-4 bg-white rounded-full transition peer-checked:translate-x-5"></span>
+                </span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <!-- Footer (matches cart page aesthetic) -->
+  <footer class="bg-slate-900 text-slate-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
+        <div class="text-sm">© 2025 YourShop. All rights reserved.</div>
+        <ul class="flex items-center justify-start md:justify-center gap-6 text-sm">
+          <li><a class="hover:underline underline-offset-4" href="#">About</a></li>
+          <li><a class="hover:underline underline-offset-4" href="#">Contact</a></li>
+          <li><a class="hover:underline underline-offset-4" href="#">Help</a></li>
+          <li><a class="hover:underline underline-offset-4" href="#">Privacy</a></li>
+          <li><a class="hover:underline underline-offset-4" href="#">Terms</a></li>
+        </ul>
+        <div class="flex items-center md:justify-end gap-4">
+          <a href="#" aria-label="Facebook" class="p-2 rounded-lg bg-white/10 hover:bg-white/20">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M22 12a10 10 0 1 0-11.6 9.9v-7h-2.3V12h2.3V9.7c0-2.3 1.4-3.6 3.5-3.6 1 0 2 .2 2 .2v2.2h-1.1c-1.1 0-1.4.7-1.4 1.3V12h2.4l-.4 2.9h-2v7A10 10 0 0 0 22 12"/></svg>
+          </a>
+          <a href="#" aria-label="Instagram" class="p-2 rounded-lg bg-white/10 hover:bg-white/20">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm5 5a5 5 0 1 0 0 10 5 5 0 0 0 0-10zm6-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/></svg>
+          </a>
+          <a href="#" aria-label="LinkedIn" class="p-2 rounded-lg bg-white/10 hover:bg-white/20">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5C4.98 4.88 3.86 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM.5 8h4V23h-4zM8 8h3.8v2.1h.1c.5-1 1.8-2.1 3.8-2.1 4.1 0 4.9 2.7 4.9 6.2V23h-4v-5.4c0-1.3 0-3-1.8-3s-2.1 1.4-2.1 2.9V23H8z"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

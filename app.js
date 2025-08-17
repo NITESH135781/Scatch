@@ -37,7 +37,7 @@ app.use("/users", usersRouter);
 app.use("/products", productsRouter);
 
 app.get('/cart1', (req, res) => {
-    res.render('cart1');
+    res.render('cart2');
 });
 
 
