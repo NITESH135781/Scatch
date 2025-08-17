@@ -4,7 +4,7 @@ const cookieParser = require("cookie-parser");
 const path = require("path");
 const flash = require("connect-flash");
 const expressSession = require("express-session");
-const MongoStore = require("connect")
+const MongoStore = require("connect-mongo")
 
 require("dotenv").config();
 
