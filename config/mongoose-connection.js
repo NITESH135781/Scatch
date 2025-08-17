@@ -5,7 +5,10 @@ const dbgr = require('debug')('development:mongoose');
 
 
 mongoose
-.connect(`${config.get('MONGODB_URI')}/scatch`)
+.connect(process.env.MONGODB_URI,{
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+})
 .then(() => {
     dbgr("Connected to MongoDB");
 })
