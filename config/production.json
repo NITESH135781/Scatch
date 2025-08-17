@@ -1,0 +1,6 @@
+{
+  "PORT": 10000,
+  "MONGODB_URI": "",
+  "SESSION_SECRET": ""
+}
+
