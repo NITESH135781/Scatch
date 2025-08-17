@@ -22,8 +22,7 @@ router.get('/account', isLoggedIn, async (req, res) => {
 router.get("/shop", isLoggedIn, async function (req, res) {
   let products = await product.find();
   let success = req.flash("success");
-
-  let admin = 
+  
   res.render("shop", { products, success });
 });
 

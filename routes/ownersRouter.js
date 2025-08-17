@@ -3,6 +3,7 @@ const bcrypt = require("bcrypt");
 const router = express.Router();
 const mongoose = require("../models/owner-model");
 const ownerModel = require("../models/owner-model");
+const product = require("../models/product-model");
 const isLoggedIn = require("../middlewares/isLoggedIn");
 const { isOwner, isUser } = require('../middlewares/auth');
 
@@ -21,11 +22,15 @@ router.post('/login', async (req, res) => {
 
   req.session.ownerId = owner._id;
 
-  res.render('Owner-dashboard', { success: 'Login successful' });
+  let products = await product.find();
+
+  res.render('Owner-dashboard', { success: 'Login successful', products });
 });
 
-router.get('/create', (req, res) => {
+router.get('/create', async (req, res) => {
     res.render('createproducts', { success: req.flash('success'), error: req.flash('error') });
 });
+
+
 
 module.exports = router;

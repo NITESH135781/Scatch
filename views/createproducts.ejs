@@ -61,9 +61,24 @@
       <div class="container mx-auto px-4 md:px-10 py-10 md:py-20 flex flex-col md:flex-row gap-6 flex-grow">
 
         <!-- Sidebar -->
-        <div class="w-full md:w-1/4 flex flex-col items-start space-y-2">
-          <a class="block w-fit text-blue-600" href="">All Products</a>
-          <a class="block w-fit text-blue-600" href="">Create new product</a>
+        <div class="w-64 min-h-screen bg-white shadow-md p-6 space-y-6">
+          <div class="flex items-center space-x-2 text-blue-600 font-semibold cursor-pointer">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <a href="/owners/allproducts"><span>All Products</span></a>
+          </div>
+
+          <div class="flex items-center space-x-2 text-red-500 cursor-pointer">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5-4h4m-4 0a1 1 0 00-1 1v1h6V4a1 1 0 00-1-1m-4 0h4" />
+            </svg>
+            <span>Delete All</span>
+          </div>
         </div>
 
         <!-- Main content -->
