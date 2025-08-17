@@ -6,12 +6,48 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    :root { --ring: 230 96% 62%; }
-    body { font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, 'Apple Color Emoji', 'Segoe UI Emoji'; }
-    .glass { background: rgba(255,255,255,0.7); backdrop-filter: blur(10px); }
+    :root {
+      --ring: 230 96% 62%;
+    }
+
+    body {
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, 'Apple Color Emoji', 'Segoe UI Emoji';
+    }
+
+    .glass {
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(10px);
+    }
   </style>
 </head>
-<%- include('./partials/header') %>
+<nav class="w-full flex justify-between items-center px-5 py-3 bg-white shadow-md">
+  <!-- Logo -->
+  <a href="/shop">
+    <h3 class="text-[25px] font-[700]">Scatch-Admin</h3>
+  </a>
+
+  <% var loggedIn=typeof loggedIn !=="undefined" ? loggedIn : true %>
+    <% if (loggedIn) { %>
+      <!-- Desktop Links -->
+      <div class="hidden md:flex gap-6 text-lg font-medium">
+
+        <a href="/users/logout" class="text-red-600 hover:text-red-700">Logout</a>
+      </div>
+
+      <!-- Mobile Hamburger -->
+      <div class="md:hidden">
+        <button id="menu-btn" class="text-2xl">
+          <i class="ri-menu-line"></i>
+        </button>
+      </div>
+      <% } %>
+</nav>
+
+<!-- Mobile Menu (hidden by default) -->
+<div id="mobile-menu" class="hidden flex-col gap-4 px-5 py-4 bg-gray-100 md:hidden">
+  <a href="/shop" class="hover:text-blue-600">Shop</a>
+  <a href="/users/logout" class="text-red-600 hover:text-red-700">Logout</a>
+</div>
 
 <% if(success.length>0){ %>
   <div class="absolute top-5 left-1/2 -translate-x-1/2 p-3 rounded-md bg-blue-500">
@@ -19,51 +55,55 @@
       <%= success %>
     </span>
   </div>
-<% } %>
+  <% } %>
 
-<div class="min-h-screen flex flex-col">
-  <div class="container mx-auto px-4 md:px-10 py-10 md:py-20 flex flex-col md:flex-row gap-6 flex-grow">
+    <div class="min-h-screen flex flex-col">
+      <div class="container mx-auto px-4 md:px-10 py-10 md:py-20 flex flex-col md:flex-row gap-6 flex-grow">
 
-    <!-- Sidebar -->
-    <div class="w-full md:w-1/4 flex flex-col items-start space-y-2">
-      <a class="block w-fit text-blue-600" href="">All Products</a>
-      <a class="block w-fit text-blue-600" href="">Create new product</a>
+        <!-- Sidebar -->
+        <div class="w-full md:w-1/4 flex flex-col items-start space-y-2">
+          <a class="block w-fit text-blue-600" href="">All Products</a>
+          <a class="block w-fit text-blue-600" href="">Create new product</a>
+        </div>
+
+        <!-- Main content -->
+        <main class="w-full md:w-3/4 bg-white p-6 md:p-8 shadow rounded-lg">
+          <h2 class="text-xl font-bold mb-6">Create New Product</h2>
+          <form autocomplete="off" action="/products/create" method="post" enctype="multipart/form-data"
+            class="space-y-6">
+
+            <!-- Product details -->
+            <div>
+              <h3 class="text-lg font-semibold mb-3">Product Details</h3>
+              <div class="mb-4">
+                <label class="block mb-2 font-medium">Product Image</label>
+                <input name="image" type="file" class="py-2 px-4 border rounded w-full">
+              </div>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <input name="name" type="text" placeholder="Product Name" class="border p-2 rounded w-full">
+                <input name="price" type="text" placeholder="Product Price" class="border p-2 rounded w-full">
+                <input name="discount" type="text" placeholder="Discount Price"
+                  class="border p-2 rounded w-full sm:col-span-2">
+              </div>
+            </div>
+
+            <!-- Panel details -->
+            <div>
+              <h3 class="text-lg font-semibold mb-3">Panel Details</h3>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <input name="bgcolor" type="text" placeholder="Background Color" class="border p-2 rounded w-full">
+                <input name="panelcolor" type="text" placeholder="Panel Color" class="border p-2 rounded w-full">
+                <input name="textcolor" type="text" placeholder="Text Color"
+                  class="border p-2 rounded w-full sm:col-span-2">
+              </div>
+            </div>
+
+            <!-- Submit button -->
+            <input class="px-5 py-2 rounded bg-blue-500 text-white cursor-pointer hover:bg-blue-600 transition"
+              type="submit" value="Create New Product">
+          </form>
+        </main>
+      </div>
     </div>
 
-    <!-- Main content -->
-    <main class="w-full md:w-3/4 bg-white p-6 md:p-8 shadow rounded-lg">
-      <h2 class="text-xl font-bold mb-6">Create New Product</h2>
-      <form autocomplete="off" action="/products/create" method="post" enctype="multipart/form-data" class="space-y-6">
-
-        <!-- Product details -->
-        <div>
-          <h3 class="text-lg font-semibold mb-3">Product Details</h3>
-          <div class="mb-4">
-            <label class="block mb-2 font-medium">Product Image</label>
-            <input name="image" type="file" class="py-2 px-4 border rounded w-full">
-          </div>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <input name="name" type="text" placeholder="Product Name" class="border p-2 rounded w-full">
-            <input name="price" type="text" placeholder="Product Price" class="border p-2 rounded w-full">
-            <input name="discount" type="text" placeholder="Discount Price" class="border p-2 rounded w-full sm:col-span-2">
-          </div>
-        </div>
-
-        <!-- Panel details -->
-        <div>
-          <h3 class="text-lg font-semibold mb-3">Panel Details</h3>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <input name="bgcolor" type="text" placeholder="Background Color" class="border p-2 rounded w-full">
-            <input name="panelcolor" type="text" placeholder="Panel Color" class="border p-2 rounded w-full">
-            <input name="textcolor" type="text" placeholder="Text Color" class="border p-2 rounded w-full sm:col-span-2">
-          </div>
-        </div>
-
-        <!-- Submit button -->
-        <input class="px-5 py-2 rounded bg-blue-500 text-white cursor-pointer hover:bg-blue-600 transition" type="submit" value="Create New Product">
-      </form>
-    </main>
-  </div>
-</div>
-
-<%- include('./partials/footer') %>
+    <%- include('./partials/footer') %>

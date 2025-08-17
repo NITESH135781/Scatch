@@ -3,7 +3,7 @@ const app = express();
 const cookieParser = require('cookie-parser');
 const path = require('path');
 const flash = require('connect-flash');
-const expressSession = require('express-session');
+const expressSession = require('express-session')
 
 require("dotenv").config();
 
@@ -21,9 +21,10 @@ app.use(
     expressSession({
         secret: process.env.SESSION_SECRET,
         resave: false,
-        sevUninitialized: false,
+        saveUninitialized: false, // ← fix this typo
     })
-)
+);
+
 
 app.use(flash());
 app.use(express.static(path.join(__dirname, 'public')));
@@ -36,8 +37,9 @@ app.use("/owners", ownersRouter);
 app.use("/users", usersRouter);
 app.use("/products", productsRouter);
 
-app.get('/cart1', (req, res) => {
-    res.render('cart2');
+app.get("/owner-dashboard", (req, res) => {
+    
+    res.render('owner-dashboard');
 });
 
 

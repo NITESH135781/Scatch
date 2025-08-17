@@ -1,35 +1,31 @@
-const express = require('express');
+const express = require("express");
+const bcrypt = require("bcrypt");
 const router = express.Router();
-const mongoose = require('../models/owner-model');
-const ownerModel = require('../models/owner-model');
-const isLoggedIn = require('../middlewares/isLoggedIn');
-
-if(process.env.node_env === 'development') {
-    router.post("/create", async (req, res) => {
-        let owner = await ownerModel.find();
-        if( owner.length > 0 ){
-            return res.status(504).send("you don't have permission to creae a new owner")
-        }
-        let {fullname, email, password} = req.body;
-
-        let createdowner = await ownerModel.create({
-            fullname,
-            email,
-            password
-        });
-        res.status(201).send(createdowner);
-    });
-}
+const mongoose = require("../models/owner-model");
+const ownerModel = require("../models/owner-model");
+const isLoggedIn = require("../middlewares/isLoggedIn");
+const { isOwner, isUser } = require('../middlewares/auth');
 
 router.get('/', (req, res) => {
-    res.send("Owners it's working");   
+    let error = req.flash("error");
+    res.render('owner-login', { error });
 });
 
+router.post('/login', async (req, res) => {
+  const { email, password } = req.body;
+  const owner = await ownerModel.findOne({ email });
+  if (!owner) return res.render('owner-login', { error: 'Invalid credentials' });
 
-router.get("/admin", (req, res) => {
-    let success = req.flash('success');
+  const match = await bcrypt.compare(password, owner.password);
+  if (!match) return res.render('owner-login', { error: 'Invalid credentials' });
 
-    res.render("createproducts", {success});
+  req.session.ownerId = owner._id;
+
+  res.render('Owner-dashboard', { success: 'Login successful' });
+});
+
+router.get('/create', (req, res) => {
+    res.render('createproducts', { success: req.flash('success'), error: req.flash('error') });
 });
 
 module.exports = router;
