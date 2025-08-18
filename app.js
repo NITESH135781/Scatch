@@ -4,7 +4,7 @@ const cookieParser = require("cookie-parser");
 const path = require("path");
 const flash = require("connect-flash");
 const expressSession = require("express-session");
-const MongoStore = require("connect-mongo")
+const MongoStore = require("connect-mongo");
 
 require("dotenv").config();
 
@@ -24,9 +24,10 @@ app.use(
     resave: false,
     saveUninitialized: false, // ← fix this typo
     store: MongoStore.create({
-      mongoUrl: process.env.MONGO_URI,
+      mongoUrl: process.env.MONGODB_URI,
       collectionName: "sessions",
     }),
+
     cookie: {
       secure: process.env.NODE_ENV === "production", // only send cookie over HTTPS in production
       maxAge: 1000 * 60 * 60 * 24, // 1 day
