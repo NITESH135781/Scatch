@@ -5,10 +5,7 @@ const dbgr = require('debug')('development:mongoose');
 
 
 mongoose
-.connect(process.env.MONGODB_URI,{
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-})
+.connect(process.env.MONGODB_URI)
 .then(() => {
     dbgr("Connected to MongoDB");
 })
